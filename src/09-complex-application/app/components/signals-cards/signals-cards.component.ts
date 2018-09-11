@@ -49,7 +49,18 @@ export class SignalsCardsComponent extends BaseComponent implements RenderCompon
         });
     }
 
+    isSignalTypeItemInArray(item: SignalType, array: Array<SignalType>): boolean {
+        return array.filter(type => type.name === item.name).length > 0;
+    }
+
     extractSignalTypes(signals: Array<Signal>) {
-        return [];
+        const signalTypes: Array<SignalType> = [];
+        console.log(signalTypes);
+        signals.forEach(signal => {
+            if(!this.isSignalTypeItemInArray(signal.type,signalTypes)){
+                signalTypes.push(signal.type);
+            }
+        });
+        return signalTypes;
     }
 }
