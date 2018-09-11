@@ -1,3 +1,3 @@
-declare module ".hbs";
+declare module "*.hbs";
 
 declare function require(module : string): any;
