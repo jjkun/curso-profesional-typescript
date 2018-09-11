@@ -22,11 +22,12 @@ export class SignalsCardsComponent extends BaseComponent implements RenderCompon
         this._signalService.getSignals().then(response => {
             this.signals = this.transformSignalsData(response.data.signals);
             this.signalTypes = this.extractSignalTypes(response.data.signals);
-            this.applyRenderFromParentComponent(template,this.signals,this.signalTypes);
+            this.applyRenderFromParentComponent(this.signals,this.signalTypes);
+            this.applyUIEvents();
         });
     }
 
-    applyRenderFromParentComponent(template,signals: Array<Signal>, signalTypes: Array<SignalType>){
+    applyRenderFromParentComponent(signals: Array<Signal>, signalTypes: Array<SignalType>){
         super.render({
             data: {
                 signals:signals,
@@ -63,4 +64,29 @@ export class SignalsCardsComponent extends BaseComponent implements RenderCompon
         });
         return signalTypes;
     }
+
+    applyUIEvents(){
+        const $select = document.querySelector("#signalTypes") as HTMLSelectElement;
+        //$('select').on('change',function(){})
+        $select.onchange = (Event) => {
+            console.log('Change');
+            const selectedValue = (event.target as any).value;
+            if(selectedValue !== "-1"){
+                // 1) filtrar 
+                const filteredSignals = this.signals.filter(signal => signal.type.id === selectedValue);
+                //2) redderizar
+                this.applyRenderFromParentComponent(filteredSignals,this.signalTypes);
+                //3) seleccionar el índice
+                const findSelectedIndex = (signalTypes:Array<SignalType>, selectedValue: string): number => {
+                    return signalTypes.findIndex((type:SignalType) => type.id === selectedValue);
+                };
+                (document.querySelector('#signalTypes') as HTMLSelectElement)
+                .selectedIndex = findSelectedIndex(this.signalTypes,selectedValue) + 1;
+            } else {
+                this.applyRenderFromParentComponent(this.signals,this.signalTypes);
+            }
+            this.applyUIEvents();
+        }
+    }
+
 }
