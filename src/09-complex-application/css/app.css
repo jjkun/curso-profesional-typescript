@@ -1,0 +1,45 @@
+body {
+    background-color: #f5f6f7;
+}
+
+.b-signal {
+    overflow: hidden;
+}
+
+.b-signal--list-item {
+    transition: all .3s ease-in-out;
+    box-shadow: 0 0 2rem rgba(0, 0, 255, .1);
+    border-radius: 1rem;
+}
+
+.b-signal--list-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.b-signal__title-link {
+    color: black;
+    line-height: 1.5;
+}
+
+.b-signal__title-link :hover {
+    color: #23d160;
+}
+
+.b-signal__image {
+    max-width: 40%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.margin-top-sm {
+    margin-top: 20px;
+}
+
+.padding-top-sm {
+    padding-top: 20px;
+}
+
+.margin-bottom-sm {
+    margin-bottom: 20px;
+}
